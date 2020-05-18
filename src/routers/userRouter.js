@@ -21,9 +21,8 @@ router.post('/users', async (req, res) => {
 
         sendWelcomeMail(user.email, user.name)
 
-        res.status(201).send({ data: user, token })
+        res.status(201).send({ user: user, token })
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -50,7 +49,6 @@ router.patch('/users/me', auth, async (req, res) => {
 
         res.send(user)
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -64,7 +62,6 @@ router.delete('/users/me', auth, async (req, res) => {
 
         res.send(req.user)
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -81,7 +78,6 @@ router.post('/users/login', async (req, res) => {
 
         res.send({ user, token })
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -95,7 +91,6 @@ router.post('/users/logout', auth, async (req, res) => {
 
         res.status(200).send();
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -108,7 +103,6 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 
         res.status(200).send();
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -120,7 +114,6 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter: (req, file, cb) => {
-        console.log(file.originalname)
         if (file.originalname.match(/\.(jpg|jpeg|png)$/)) {
             return cb(undefined, true)
         }
@@ -158,7 +151,6 @@ router.get('/users/:id/avatar', async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
 
-        console.log(req.params.id, user)
         if (!user || !user.avatar) {
             throw new Error()
         }
@@ -221,7 +213,6 @@ router.patch('/users/:id', async (req, res) => {
         }
         res.send(user)
     } catch (e) {
-        console.log(e)
         res.status(400).send(e)
     }
 })

@@ -12,7 +12,6 @@ router.post('/tasks', auth, async (req, res) => {
 
     try {
         const data = await task.save()
-        console.log(data)
         res.status(201).send(data)
     } catch (e) {
         console.log(e)
@@ -104,6 +103,7 @@ router.delete('/tasks/:id', auth, async (req, res) => {
 
         res.send(task)
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })
